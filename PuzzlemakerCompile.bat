@@ -159,7 +159,7 @@ if exist "%p2path%\bin\vbsp_original.exe" (
     ::Game launch
     echo Finished! 
     echo [33mLaunching P2CE...
-    bin\win64\%game_executable% -game "%modpath%" -novid +map %map_path%\%filename%
+    bin\win64\%game_executable% -game "%modpath%" -novid -multirun +map %map_path%\%filename%
     pause
     exit
 
