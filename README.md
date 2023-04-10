@@ -36,7 +36,7 @@ The .zip file you downloaded contains four files:
 
 You will need to configure three of those, but this isn't difficult to do. Firstly let's discuss the file structure.
 There are no real rules on the filestructure except for one:
-**`gameinfo.txt`, `srctools.vdf`, `srctools_paths.vdf` must be all in the same directory.**
+**`gameinfo.txt`, `srctools.vdf`, `srctools_paths.vdf` must be all in the same directory as the maps (Specified in map_path in the .bat file, check below).**
 You can place the .bat file wherever you'd like, is it Desktop or somewhere in your mod file system it doesn't matter much* (explained later on).
 
 The default config is to have all of these files placed in `<mod>/maps/puzzlemaker/`, so for example `p2ce/maps/puzzlemaker/`.
@@ -106,6 +106,37 @@ Usage of this script is very, very simple. When opened, it will prompt you with 
 - `Map name`
    - Then, the script will ask you to use the `puzzlemaker_export` command. When you are in the puzzlemaker, save the puzzle, open up the console and type `puzzlemaker_export ` and then type the name of the mapfile (it can be anything, but without extensions). After that go over to the script and type the same name. The compiling process will begin. **Keep in mind you will need to do this everytime you make changes!** If you don't want to do this or leave the field empty the script will default to the `preview.vmf`, which is the latest played puzzle. To use this method instead, just launch the puzzle in Portal 2, then stop the launching process (so the puzzlemaker generates the `preview.vmf` with the newest changes).
 
-That's basically all you'll have to do to use this script. The further part of this discussion (most likely a comment below) is meant for advanced users that want to dive deeper and see how this script works.
+That's basically all you'll have to do to use this script. The further part of this readme is meant for advanced users that want to dive deeper and see how this script works.
 
+## Compilation Process
+
+### Pre-compiler
+This step invokes the vbsp.exe found in `Portal 2/bin/vbsp.exe` with default arguments and `-force_peti -skip_vbsp`. This is why BEE2 is crucial for this to work, since it performs all of the style work, logic swapping and everything important related to the compilation process. This yields the `styled/preview.vmf` file in `sdk_content/maps` as opposed to just using `maps/preview.vmf` which is the pure puzzlemaker exported file. This is also why Postcompiler **must** be run, since the map relies heavily on `comp_` entities.
+
+### Copy-file
+This step copies the `styled/preview.vmf` to the map_path directory in the mod structure, for further processing with P2CE's tools.
+
+### VBSP
+Standard VBSP invoked with default arguments and also `-instancepath "%p2path%/sdk_content/maps/"` where p2path is the path of Portal 2; so the instances get compiled successfully.
+
+It is to mention here, that gameinfo.txt is used for VBSP, VVIS and VRAD, so they compile properly.
+
+### Postcompiler
+Postcompiler is run after VBSP, and is setup by the .vdf files so it packs the BEE2 files. This means that mounting BEE2 doesn't need to be mounted. It works most of the time (check above). It definitelly packs the crucial files such as vscripts, textures etc. Thing to note here: the -game parameter actually references the game directory of the mod, not the custom gameinfo bundled with the script. It is because we don't actually need to mount BEE2 stuff via gameinfo here, we can mount it in srctools.vdf
+
+### VVIS
+Standard VIS process, operating on the .bsp file compiled by VBSP, nothing else to add here.
+
+### VRAD
+This process depends on the mode user selects. For standard the arguments passed are:
+`bin\win64\vrad.exe -hdr -StaticPropLighting -StaticPropPolys -lights "%p2path%/portal2/lights.rad" -game "%copypath%" "%copypath%/%filename%"`
+(%copypath% is the directory where the map files/gameinfo are located in)\n
+
+Where for the "Full compile" the arguments are as follows:
+`bin\win64\vrad.exe -final -hdr -TextureShadows -StaticPropLighting -StaticPropPolys -PortalTraversalLighting -PortalTraversalAO -lights "%p2path%/portal2/lights.rad" -game "%copypath%" "%copypath%/%filename%"`
+
+### Game
+At the end, game is launched with: ` -game "%modpath%" -novid -multirun +map %map_path%\%filename%`
+
+As you see the compiling process is rather easy. There are multiple error-checking lines to ensure it's the most user-friendly it can be.
 
