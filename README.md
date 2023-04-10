@@ -109,12 +109,14 @@ Usage of this script is very, very simple. When opened, it will prompt you with 
 That's basically all you'll have to do to use this script. The further part of this readme is meant for advanced users that want to dive deeper and see how this script works.
 
 ## Compilation Process
+### Puzzlemaker
+It all starts with the `puzzlemaker_export <name>` command which exports the map into `sdk_content/maps/<name>.vmf`
 
 ### Pre-compiler
-This step invokes the vbsp.exe found in `Portal 2/bin/vbsp.exe` with default arguments and `-force_peti -skip_vbsp`. This is why BEE2 is crucial for this to work, since it performs all of the style work, logic swapping and everything important related to the compilation process. This yields the `styled/preview.vmf` file in `sdk_content/maps` as opposed to just using `maps/preview.vmf` which is the pure puzzlemaker exported file. This is also why Postcompiler **must** be run, since the map relies heavily on `comp_` entities.
+This step invokes the vbsp.exe found in `Portal 2/bin/vbsp.exe` with default arguments and `-force_peti -skip_vbsp`. This is why BEE2 is crucial for this to work, since it performs all of the style work, logic swapping and everything important related to the compilation process. This yields the `styled/<name>.vmf` file in `sdk_content/maps` as opposed to just using `maps/<name>.vmf` which is the pure puzzlemaker exported file. This is also why Postcompiler **must** be run, since the map relies heavily on `comp_` entities.
 
 ### Copy-file
-This step copies the `styled/preview.vmf` to the map_path directory in the mod structure, for further processing with P2CE's tools.
+This step copies the `styled/<name>.vmf` to the map_path directory in the mod structure, for further processing with P2CE's tools.
 
 ### VBSP
 Standard VBSP invoked with default arguments and also `-instancepath "%p2path%/sdk_content/maps/"` where p2path is the path of Portal 2; so the instances get compiled successfully.
