@@ -132,7 +132,7 @@ Standard VIS process, operating on the .bsp file compiled by VBSP, nothing else 
 ### VRAD
 This process depends on the mode user selects. For standard the arguments passed are:
 `bin\win64\vrad.exe -hdr -StaticPropLighting -StaticPropPolys -lights "%p2path%/portal2/lights.rad" -game "%copypath%" "%copypath%/%filename%"`
-(%copypath% is the directory where the map files/gameinfo are located in)\n
+(%copypath% is the directory where the map files/gameinfo are located in)
 
 Where for the "Full compile" the arguments are as follows:
 `bin\win64\vrad.exe -final -hdr -TextureShadows -StaticPropLighting -StaticPropPolys -PortalTraversalLighting -PortalTraversalAO -lights "%p2path%/portal2/lights.rad" -game "%copypath%" "%copypath%/%filename%"`
