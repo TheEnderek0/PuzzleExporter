@@ -1,0 +1,68 @@
+"GameInfo"
+{
+	game 		"Puzzlemaker P2CE Export"
+	GameData	"p2ce.fgd"
+
+	mount
+	{
+		620
+		{
+			"required" "1"
+            
+            "bee2"
+			{
+				"vpk" "pak01"
+			}
+
+			"update"
+			{
+				"vpk" "pak01"
+			}
+
+			"portal2_dlc2"
+			{
+				"vpk" "pak01"
+			}
+
+			"portal2_dlc1"
+			{
+				"vpk" "pak01"
+			}
+
+			"portal2"
+			{
+				"vpk" "pak01"
+			}
+		}
+	}
+
+	FileSystem
+	{
+		SteamAppId				440000
+
+		// If the user has a non-English language selected, for each "Game" path and mounted folder, 
+		// another path with _<langage> at the end is automatically added.
+		// For example, 'p2ce' on a french machine would get a 'p2ce_french' path added to it.
+
+		// Search paths are relative to the base directory, which is 2 folders up from chaos.exe
+		// |gameinfo_path| points at the directory where gameinfo.txt is.
+		// This is used in mods so the user can install the mod to a different location/drive and still have it work.
+
+		SearchPaths
+		{
+			game 				"p2ce/custom/*"
+			game+mod+default_write_path				|gameinfo_path|.
+			Game				p2ce
+			Game				hammer
+			gamebin				|gameinfo_path|bin
+			Game				update
+
+			// Platform + game required for hammer
+			Platform+game		platform
+			
+			// Files downloaded from community servers are
+			// mounted last as to not override default files.
+			game+download		|gameinfo_path|download
+		}
+	}
+}
