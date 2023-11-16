@@ -64,7 +64,7 @@ if exist "%p2path%\bin\vbsp_original.exe" (
     echo Precompiling "%p2path%\sdk_content\maps\%filename%"...[0m [90m
 
     cd "%p2path%\bin"
-    vbsp.exe -game ..\portal2 -force_peti -skip_vbsp "%p2path%\sdk_content\maps\%filename%"
+    vbsp.exe -game ..\portal2 -force_peti "%p2path%\sdk_content\maps\%filename%"
 
     echo [36m
     cd "%modpath%\..\"
