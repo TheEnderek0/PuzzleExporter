@@ -1,3 +1,8 @@
+# WARNING
+## This program is outdated, use my other one, [TheEnderek0/SourceModTools](https://github.com/TheEnderek0/SourceModTools), mainly the MapCompiler tool.
+
+
+
 # PuzzleExporter
 A batch script meant for porting over puzzlemaker puzzles to P2CE.
 
